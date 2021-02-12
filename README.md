@@ -9,7 +9,11 @@ A set of scripts to make life easier for SysAdmins in Windows environments.
 
 ### Usage
 
-Just choose a script and run it! Some will be able to work remotely, others only locally.
+Just choose a script and run it! Some will be able to work locally, others remotely on an Active Directory domain.
+
+- **Probe-WinServersBootTime.ps1**: Finds active Windows Servers in Active Directory and checks the date and time of the last boot;
+
+- **Probe-WinServersAndVols.ps1**: Finds active Windows Servers in Active Directory and checks disk space consumption for all letter-mounted volumes.
 
 ### Tips, tricks and suggestions
 
@@ -22,14 +26,18 @@ Just choose a script and run it! Some will be able to work remotely, others only
 
 New scripts to/that:
 
+- Automate cleaning routines for WSUS servers
 - Automatically identify servers, check status and generate DFS reports
-- Make it easier to check the hosts file for multiple servers
-- Facilitate cleaning user profiles on servers
-- Check the last restart of multiple servers
+- Deploy EXE packages to servers
+- Deploy MSI packages to servers
 - Detect, disable, and move inactive computer accounts in AD
 - Detect, disable, and move inactive user accounts in AD
-- Automate cleaning routines for WSUS servers
-- Deploy MSI and EXE packages to servers
+- Facilitate cleaning user profiles on servers
+- Make it easier to check the hosts file for multiple servers
+
+#### v0.1.1: New script and changes
+- Probe-WinServersBootTime.ps1 created, tested and added
+- Probe-WinServersAndVols.ps1 renamed to Probe-WinServersVols.ps1 and improved
 
 #### v0.0.0: First public pre-release
 - Probe-WinServersAndVols.ps1 created, tested and added
