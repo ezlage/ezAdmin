@@ -6,19 +6,27 @@ A set of scripts to make life easier for SysAdmins in Windows environments.
 
 - Windows PowerShell
 - Command Prompt (cmd)
+- Remote Server Administration Tools (RSAT)
 
 ### Usage
 
 Just choose a script and run it! Some will be able to work locally, others remotely on an Active Directory domain.
 
+- **Generate-DFSHealthReports.ps1**: Finds all DFSr groups, get statuses and generate all full reports in parallel!;
+
+```PowerShell
+.\Generate-DFSHealthReports.ps1 [ReportPath="<path-to-save-reports>"] [PrefSite=<preferred-ad-site>] [Wait]
+```
+
 - **Probe-WinServersBootTime.ps1**: Finds active Windows Servers in Active Directory and checks the date and time of the last boot;
 
-- **Probe-WinServersAndVols.ps1**: Finds active Windows Servers in Active Directory and checks disk space consumption for all letter-mounted volumes.
+- **Probe-WinServersVols.ps1**: Finds active Windows Servers in Active Directory and checks disk space consumption for all letter-mounted volumes.
 
 ### Tips, tricks and suggestions
 
-- You must first enable and configure PSRemoting, WinRM and Firewall
 - If you notice changes or increments that may be beneficial for any use case, give the suggestion or send a pull request
+- For some scripts, you must first enable and configure PSRemoting, WinRM and Firewall
+- What is ok will be displayed in green, errors in red and the rest in yellow
 
 ### Change log and roadmap
 
@@ -27,13 +35,17 @@ Just choose a script and run it! Some will be able to work locally, others remot
 New scripts to/that:
 
 - Automate cleaning routines for WSUS servers
-- Automatically identify servers, check status and generate DFS reports
 - Deploy EXE packages to servers
 - Deploy MSI packages to servers
 - Detect, disable, and move inactive computer accounts in AD
 - Detect, disable, and move inactive user accounts in AD
+- Detect and remove the temporary attribute from files
 - Facilitate cleaning user profiles on servers
 - Make it easier to check the hosts file for multiple servers
+
+#### v0.2.2: Another script and some changes
+- Generate-DFSHealthReports.ps1 created, tested and added
+- Correction of dates in comments in other scripts
 
 #### v0.1.1: New script and changes
 - Probe-WinServersBootTime.ps1 created, tested and added

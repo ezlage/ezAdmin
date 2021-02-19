@@ -1,8 +1,10 @@
 ﻿#https://github.com/ezlage/ezAdmin
-#2020-02-12 19:26 UTC
-#2020-02-10 14:31 UTC
+#2021-02-19 20:21 UTC
+#2021-02-12 19:26 UTC
+#2021-02-10 14:31 UTC
+$OldEAP=$ErrorActionPreference;
+$ErrorActionPreference='SilentlyContinue';
 Try {
-  $ErrorActionPreference='SilentlyContinue';
   Write-Host "Probing Windows Servers and their mounted volumes... " -NoNewline;
   $Servers = Get-ADComputer -Filter '(Enabled -eq $True) -and (OperatingSystem -like "Windows Server*")';
   $OKServers=@();
@@ -86,3 +88,4 @@ Try {
 } Catch {
   Write-Host $_.Exception.GetType().FullName, $_.Exception.Message -ForegroundColor Red;
 }
+$ErrorActionPreference=$OldEAP;

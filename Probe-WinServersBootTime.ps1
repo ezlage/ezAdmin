@@ -1,9 +1,12 @@
 ﻿#https://github.com/ezlage/ezAdmin
-#2020-02-12 19:26 UTC
+#2021-02-19 20:21 UTC
+#2021-02-12 20:43 UTC
+#2021-02-12 19:26 UTC
+$OldEAP=$ErrorActionPreference;
+$ErrorActionPreference='SilentlyContinue';
 Try {
-  $ErrorActionPreference='SilentlyContinue';
   Write-Host "Probing Windows Servers and their last boot up times... " -NoNewline;
-  $Servers = Get-ADComputer -Filter '(Enabled -eq $True) -and (OperatingSystem -like "Windows Server*")';
+  $Servers=Get-ADComputer -Filter '(Enabled -eq $True) -and (OperatingSystem -like "Windows Server*")';
   $FailedServers=@();
   $ServersLB=@();
   ForEach ($Server in $Servers) {
@@ -26,6 +29,7 @@ Try {
     }
   }
   Write-Host "OK!"
+  Write-Host;
   If ($FailedServers.Count -gt 0) {
     Write-Host "It was not possible to evaluate the last boot time of these servers:"
     ForEach($Srv in $FailedServers) {
@@ -39,3 +43,4 @@ Try {
 } Catch {
   Write-Host $_.Exception.GetType().FullName, $_.Exception.Message -ForegroundColor Red;
 }
+$ErrorActionPreference=$OldEAP;
