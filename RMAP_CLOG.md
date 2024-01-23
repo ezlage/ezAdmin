@@ -24,7 +24,11 @@
 
 > Actions taken but not yet versioned
 
-- Nothing for now
+- Updated repository documentation (RMAP_CLOG.md)
+- Added unfinished script (PowerShell\Mount-BulkVolumes.ps1)
+- Added script pending refactoring (PowerShell\Get-WinServersVolStats.ps1)
+- Added script pending refactoring (PowerShell\Get-WinServersBootTime.ps1)
+- Added script pending refactoring (PowerShell\Export-DfsrHealthReports.ps1)
 
 ### [Untracked](#untracked)
 
