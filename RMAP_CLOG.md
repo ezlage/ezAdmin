@@ -25,6 +25,10 @@
 > Actions taken but not yet versioned
 
 - Updated repository documentation (RMAP_CLOG.md)
+- Updated unfinished script (PowerShell\Mount-BulkMappings.ps1)
+- Renamed script (PowerShell\Mount-BulkVolumes.ps1 -> PowerShell\Mount-BulkMappings.ps1)
+- Removed unnecessary error message (Batchfile\Set-InitialKeyboardIndicators.bat)
+- Updated repository documentation (RMAP_CLOG.md)
 - Added unfinished script (PowerShell\Mount-BulkVolumes.ps1)
 - Added script pending refactoring (PowerShell\Get-WinServersVolStats.ps1)
 - Added script pending refactoring (PowerShell\Get-WinServersBootTime.ps1)
