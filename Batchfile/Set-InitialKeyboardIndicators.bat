@@ -27,14 +27,14 @@ FOR /F "TOKENS=*" %%I IN ('REG QUERY "HKEY_USERS" ^| FIND /I /V "_Classes"') DO 
 FOR /F "TOKENS=3" %%I IN ('REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList" /V "Default"') DO (
 	CMD /C "REG LOAD "HKEY_LOCAL_MACHINE\ezAdmin-SetIKI" "%%I\NTUSER.DAT" 2>NUL 1>NUL"
 	REG ADD "HKEY_LOCAL_MACHINE\ezAdmin-SetIKI\Control Panel\Keyboard" /V "InitialKeyboardIndicators" /T "REG_SZ" /D "%1" /F 2>NUL 1>NUL
-	REG UNLOAD "HKEY_LOCAL_MACHINE\ezAdmin-SetIKI" 2>NUL 1>NUL || ECHO Failed to manipulate file "%PROFDIR%\%%I\NTUSER.DAT"!
+	REG UNLOAD "HKEY_LOCAL_MACHINE\ezAdmin-SetIKI" 2>NUL 1>NUL
 )
 
 FOR /F "TOKENS=3" %%I IN ('REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList" /V "ProfilesDirectory"') DO SET "PROFDIR=%%I"
 FOR /F "TOKENS=*" %%I IN ('DIR /B /A:D "%PROFDIR%"') DO (
 	CMD /C "REG LOAD "HKEY_LOCAL_MACHINE\ezAdmin-SetIKI" "%PROFDIR%\%%I\NTUSER.DAT" 2>NUL 1>NUL"
 	REG ADD "HKEY_LOCAL_MACHINE\ezAdmin-SetIKI\Control Panel\Keyboard" /V "InitialKeyboardIndicators" /T "REG_SZ" /D "%1" /F 2>NUL 1>NUL
-	REG UNLOAD "HKEY_LOCAL_MACHINE\ezAdmin-SetIKI" 2>NUL 1>NUL || ECHO Failed to manipulate file "%PROFDIR%\%%I\NTUSER.DAT"!
+	REG UNLOAD "HKEY_LOCAL_MACHINE\ezAdmin-SetIKI" 2>NUL 1>NUL
 )
 
 :CURRENTUSER
