@@ -1,19 +1,13 @@
 [CmdletBinding()]
 param (
     [Parameter(Position=0,mandatory=$true)]
-    [string] $MappingsCSV
+    [string] $MappingsCSV,
+    [Parameter(mandatory=$false)]
+    [switch]$SkipCredPrompt
 )
 
 Clear-Host;
 $PSDefaultParameterValues['*:Encoding'] = 'utf8';
-
-# Changing the default action on error, warning or progress
-$EPref = $ErrorActionPreference;
-$WPref = $WarningPreference;
-$PPref = $ProgressPreference;
-$ErrorActionPreference = 'Stop';
-$WarningPreference = 'SilentlyContinue';
-$ProgressPreference = 'SilentlyContinue';
 
 Write-Host;
 Write-Host "=========================================";
@@ -25,7 +19,15 @@ Write-Host "= Material protected by a license (MIT) =";
 Write-Host "=========================================";
 Write-Host;
 
-$csvHeader = @("Entity", "DriveLetter", "FullPath", "CredPrompt", "Persistent");
+# Changing the default action on error, warning or progress
+$EPref = $ErrorActionPreference;
+$WPref = $WarningPreference;
+$PPref = $ProgressPreference;
+$ErrorActionPreference = 'Stop';
+$WarningPreference = 'SilentlyContinue';
+$ProgressPreference = 'SilentlyContinue';
+
+$csvHeader = @("Entity", "DriveLetter", "FullPath", "Persistent", "CredPrompt", "SaveCred");
 function Test-CSV {
     param(
         [string]$FilePath
@@ -52,7 +54,11 @@ function Test-CSV {
 }
 
 if (Test-CSV -FilePath $MappingsCSV) {
-    try {
+    try {     
+        $Username = $null;
+        $Password = $null;        
+        $CredPrompt = $false;
+        $MappedLetters = @();
         $Entities = @();
         $Entities += "$env:userdomain\$env:username";    
         [System.Security.Principal.WindowsIdentity]::GetCurrent().Groups | Where-Object {$null -ne $_.AccountDomainSid} |        
@@ -62,14 +68,7 @@ if (Test-CSV -FilePath $MappingsCSV) {
             if (($Mapping.Entity).Split("\").Length -eq 1) {
                 $Mapping.Entity = "$env:userdomain\$($Mapping.Entity)";                
             }
-            $Mapping.DriveLetter = $Mapping.DriveLetter.ToUpper()[0];            
-            switch ($Mapping.CredPrompt.toLower()) {
-                {@("true","yes","y","1") -contains $_} {
-                    $Mapping.CredPrompt = $true;                     
-                    break;
-                }
-                    default {$Mapping.CredPrompt = $false}
-            }
+            $Mapping.DriveLetter = "$($Mapping.DriveLetter.ToUpper()[0]):";            
             switch ($Mapping.Persistent.toLower()) {
                 {@("false","no","n","0") -contains $_} {
                     $Mapping.Persistent = $false;                     
@@ -77,8 +76,51 @@ if (Test-CSV -FilePath $MappingsCSV) {
                 }
                     default {$Mapping.Persistent = $true}
             }
+            switch ($Mapping.CredPrompt.toLower()) {
+                {@("true","yes","y","1") -contains $_} {
+                    $CredPrompt = $true;
+                    $Mapping.CredPrompt = $true;                     
+                    break;
+                }
+                    default {$Mapping.CredPrompt = $false}
+            }
+            switch ($Mapping.SaveCred.toLower()) {
+                {@("true","yes","y","1") -contains $_} {
+                    $CredPrompt = $true;
+                    $Mapping.SaveCred = $true;                     
+                    break;
+                }
+                    default {$Mapping.SaveCred = $false}
+            }                        
+        }        
+        foreach ($Mapping in $MappingsList) {            
+            if (($Entities -contains $Mapping.Entity) -and ($MappedLetters -notcontains $Mapping.DriveLetter)) {  
+                if (($CredPrompt) -and (-not $SkipCredPrompt)) {
+                    $Username = Read-Host -Prompt "Enter the username to be used in the mappings (DOMAIN\user.name)";
+                    $Password = Read-Host -AsSecureString -Prompt "Enter the password to be used in the mappings";
+                    Write-Host;                    
+                    $CredPrompt = $false;
+                }                              
+                Write-Host "-----------------------------------------";
+                $Mapping | Format-Table;
+                Remove-SmbMapping -LocalPath $Mapping.DriveLetter -Force -ErrorAction SilentlyContinue;
+                switch(($Mapping.CredPrompt -and $Username -and $Password)) {
+                    $true {
+                        if ($Mapping.SaveCred) {
+                            New-SmbMapping -LocalPath $Mapping.DriveLetter -RemotePath $Mapping.FullPath -Persistent $Mapping.Persistent -UserName $Username -Password $Password -SaveCredentials;
+                        } else {
+                            New-SmbMapping -LocalPath $Mapping.DriveLetter -RemotePath $Mapping.FullPath -Persistent $Mapping.Persistent -UserName $Username -Password $Password;
+                        }
+                        break;
+                    }
+                    default {
+                        New-SmbMapping -LocalPath $Mapping.DriveLetter -RemotePath $Mapping.FullPath -Persistent $Mapping.Persistent;
+                    }
+                }
+                $MappedLetters += $Mapping.DriveLetter;
+                Write-Host "-----------------------------------------";                
+            }            
         }
-        $MappingsList;
     }
     catch {
         <#Do this if a terminating exception happens#>
@@ -93,41 +135,3 @@ $WarningPreference = $WPref;
 $ProgressPreference = $PPref;
 
 Write-Host;
-
-#[System.Security.Principal.WindowsIdentity]::GetCurrent().Groups | ForEach-Object -Process {Write-Host $_.Translate([System.Security.Principal.NTAccount]);}
-
-#try {
-    #$Content = ConvertFrom-Csv -Header $csvHeader;
-    
-    #Get-Content -Path $VolListFile -Delimiter $RowSeparator -Encoding utf8 -Force;    
-
-    #$Objs = @{}
-    #foreach ($Line in $Content) {
-        #$Item = $Line.Split($ColSeparator);
-        
-        #if ((($Item.Count -eq 4) -or ($Item.Count -eq 5)) -and ($Item[0])) {
-        #    $Obj = New-Object -TypeName System.Object;
-        #    $Obj | Add-Member -MemberType NoteProperty -Name "Entity" -Value "$($env:userdomain)\$($Item[0])";
-        #    $Obj | Add-Member -MemberType NoteProperty -Name "DriveLetter" -Value $Item[1].ToUpper();
-        #    $Obj | Add-Member -MemberType NoteProperty -Name "NetworkPath" -Value $Item[2];
-        #    switch ($Item[3]) {
-        #        {@("false","no","n","0") -contains $_} { 
-        #            $Obj | Add-Member -MemberType NoteProperty -Name "Persistent" -Value "NO";
-        #            break;
-        #         }
-        #        default {$Obj | Add-Member -MemberType NoteProperty -Name "Persistent" -Value "YES";}
-        #    }            
-        #    $Obj | ConvertTo-Csv -NoHeader;            
-        #} else {
-        #    Write-Host "Line '$Line' ignored due to syntax error!" -ForegroundColor Yellow;
-        #}
-
-        #
-        # 
-        #$Vols.Add($Line.Split($ColSeparator));
-        #$Item.Count;
-        #$Item;
-    #}
-#}
-#catch {    
-#}
