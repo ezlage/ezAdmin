@@ -26,6 +26,8 @@
 
 - Updated repository documentation (RMAP_CLOG.md)
 - Updated unfinished script (PowerShell\Mount-BulkMappings.ps1)
+- Updated repository documentation (RMAP_CLOG.md)
+- Updated unfinished script (PowerShell\Mount-BulkMappings.ps1)
 - Renamed script (PowerShell\Mount-BulkVolumes.ps1 -> PowerShell\Mount-BulkMappings.ps1)
 - Removed unnecessary error message (Batchfile\Set-InitialKeyboardIndicators.bat)
 - Updated repository documentation (RMAP_CLOG.md)
