@@ -25,6 +25,9 @@
 > Actions taken but not yet versioned
 
 - Updated repository documentation (RMAP_CLOG.md)
+- Converted encoding to UTF8-BOM (PowerShell\Mount-BulkMappings.ps1)
+- Converted encoding to UTF8-BOM (PowerShell\Set-BgImages.ps1)
+- Updated repository documentation (RMAP_CLOG.md)
 - Updated repository documentation (README.md)
 - Script finished (PowerShell\Mount-BulkMappings.ps1)
 - Updated repository documentation (RMAP_CLOG.md)
