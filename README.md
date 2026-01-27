@@ -1,54 +1,23 @@
-# Lagecorp Template Repository (LTR)
+# ezAdmin
 
-This repository provides a generic baseline for new Git repositories.
+A collection of tutorials and utilities to make life easier for advanced users and IT professionals.
 
-## Requirements
+The items in this collection are separated into folders by platform and accompanied by their respective documentation.
 
-- Internet access
-- Git SCM
-
-## Usage Instructions
-
-Replace `NewRepo` with the desired name for the new repository and proceed as follows.
-
-- In any shell on Linux, macOS, and similar systems
-
-    ```sh
-    git clone https://github.com/lagecorp/LTR NewRepo
-    rm -rf NewRepo/.git
-    cd NewRepo
-    git init
-    ```
-
-    The method above also works in Git Bash or Cygwin on Windows.
-
-- On Windows Command Prompt
-
-    ```cmd
-    git clone https://github.com/lagecorp/LTR NewRepo
-    rd /s /q NewRepo\.git
-    cd NewRepo
-    git init
-    ```
-
-- On Windows PowerShell
-
-    ```powershell
-    git clone https://github.com/lagecorp/LTR NewRepo
-    Remove-Item -Recurse -Force NewRepo\.git
-    Set-Location NewRepo
-    git init
-    ```
+Browse the repository and its branches!
 
 ## Roadmap and Changelog
 
-This repository is inspired by — but not limited to — [Keep a Changelog](https://keepachangelog.com/), [Semantic Versioning](https://semver.org/), and the [LTR](https://github.com/lagecorp/LTR) template. Any changes made, expected, or intended will be documented in the [Roadmap and Changelog](./RMAP_CLOG.md) file.
+This repository is inspired by — but not limited to — [Keep a Changelog](https://keepachangelog.com/), [Semantic Versioning](https://semver.org/), and the [LTR](https://github.com/lagecorp/LTR) template. Any changes made or anticipated will be documented in the [Roadmap and Changelog](./RMAP_CLOG.md) file.
+
+Check other branches for ongoing or unreleased work.
 
 ## Credits, Sponsorship, and Licensing
 
-Developed by [Ezequiel Lage](https://github.com/ezlage) *et al*. Sponsored by [Lagecorp](https://lagecorp.com) and its subsidiaries. Published under the [MIT License](./LICENSE).  
-Note: Nested materials may have their own licenses!
+Developed by [Ezequiel Lage](https://github.com/ezlage) *et al*. Sponsored by [Lagecorp](https://lagecorp.com) and its subsidiaries. Published under the [MIT License](./LICENSE).
+
+Included materials may have their own licenses, sponsors, and credits.
 
 All feedback and contributions are welcome.
 
-#### Follow us at [lagecorp.com](https://lagecorp.com)!
+#### Follow me at [ezlage.com](https://ezlage.com)!
