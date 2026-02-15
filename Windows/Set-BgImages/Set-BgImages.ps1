@@ -77,6 +77,20 @@ Param(
 #Requires -RunAsAdministrator;
 
 $ErrorActionPreference = "Stop";
+
+Clear-Host;
+Write-Host;
+Write-Host "=========================================";
+Write-Host "=                ezAdmin                =";
+Write-Host "=========================================";
+Write-Host "= Developed -by Ezequiel Lage (@ezlage) =";
+Write-Host "= Sponsored -by Lagecorp (lagecorp.com) =";
+Write-Host "= Material protected by a license (MIT) =";
+Write-Host "=========================================";
+Write-Host;
+Write-Host "Credits to Juan Granados (@juangranados) for the original version of the file.";
+Write-Host;
+
 $ScriptName = [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name);
 
 if ([string]::IsNullOrWhiteSpace($LogPath)) {
