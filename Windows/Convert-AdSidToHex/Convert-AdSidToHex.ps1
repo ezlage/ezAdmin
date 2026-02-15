@@ -10,7 +10,7 @@ Write-Host "=========================================";
 Write-Host "=                ezAdmin                =";
 Write-Host "=========================================";
 Write-Host "= Developed -by Ezequiel Lage (@ezlage) =";
-Write-Host "= Sponsored -by Lageteck (lagecorp.com) =";
+Write-Host "= Sponsored -by Lagecorp (lagecorp.com) =";
 Write-Host "= Material protected by a license (MIT) =";
 Write-Host "=========================================";
 Write-Host;

@@ -5,7 +5,7 @@ ECHO =========================================
 ECHO =                ezAdmin                =
 ECHO =========================================
 ECHO = Developed -by Ezequiel Lage (@ezlage) =
-ECHO = Sponsored -by Lageteck (lagecorp.com) =
+ECHO = Sponsored -by Lagecorp (lagecorp.com) =
 ECHO = Material protected by a license (MIT) =
 ECHO =========================================
 ECHO.
