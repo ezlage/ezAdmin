@@ -28,15 +28,15 @@ v2.0: Set-BgImages.ps1, an improved version made by Ezequiel Lage (@ezlage)
 	This script aims to change the desktop and lock screen background image on any edition of Windows 10 or 11, being invoked with elevation via GPO.
 
 .PARAMETER LockScreenImage (Optional)
-	Path to the Lock Screen background image to copy locally in computer;
+	Path to the Lock Screen background image to copy locally in computer
     Example: "\\srvfs01\folder\LockScreen.png".
 
 .PARAMETER DesktopImage (Optional)
-	Path to the Desktop background image to copy locally in computer;
+	Path to the Desktop background image to copy locally in computer
     Example: "\\srvfs01\folder\Desktop.png".
 
 .PARAMETER LogPath (Optional)
-    Path where save log file; If it's not specified no log is recorded.
+    Path where save log file If it's not specified no log is recorded.
 
 .EXAMPLE
     Set Lock Screen and Desktop background image with logs:
@@ -62,7 +62,7 @@ v2.0: Set-BgImages.ps1, an improved version made by Ezequiel Lage (@ezlage)
     Date:			January, 2024
 #>
 
-#Requires -RunAsAdministrator;
+#Requires -RunAsAdministrator
 
 Param(
     [Parameter(Mandatory=$false,Position=0)] 
@@ -76,78 +76,78 @@ Param(
     [string]$LogPath
 )
 
-Clear-Host;
-Write-Host;
-Write-Host "=========================================";
-Write-Host "=                ezAdmin                =";
-Write-Host "=========================================";
-Write-Host "= Developed -by Ezequiel Lage (@ezlage) =";
-Write-Host "= Sponsored -by Lagecorp (lagecorp.com) =";
-Write-Host "= Material protected by a license (MIT) =";
-Write-Host "=========================================";
-Write-Host;
-Write-Host "Credits to Juan Granados (@juangranados) for the original version of the file.";
-Write-Host;
+Clear-Host
+Write-Host
+Write-Host "========================================="
+Write-Host "=                ezAdmin                ="
+Write-Host "========================================="
+Write-Host "= Developed -by Ezequiel Lage (@ezlage) ="
+Write-Host "= Sponsored -by Lagecorp (lagecorp.com) ="
+Write-Host "= Material protected by a license (MIT) ="
+Write-Host "========================================="
+Write-Host
+Write-Host "Credits to Juan Granados (@juangranados) for the original version of the file."
+Write-Host
 
-$ErrorActionPreference = "Stop";
-$ScriptName = [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name);
+$ErrorActionPreference = "Stop"
+$ScriptName = [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name)
 
 if ([string]::IsNullOrWhiteSpace($LogPath)) {
-    $LogPath = $env:TEMP;
+    $LogPath = $env:TEMP
 }
 
 try {
-    Start-Transcript -Path "$($LogPath)\$($ScriptName)_$($env:COMPUTERNAME).log" -Append | Out-Null;
+    Start-Transcript -Path "$($LogPath)\$($ScriptName)_$($env:COMPUTERNAME).log" -Append | Out-Null
 } catch {
-    Start-Transcript -Path "$($env:TEMP)\$($ScriptName)_$($env:COMPUTERNAME).log" -Append | Out-Null;
+    Start-Transcript -Path "$($env:TEMP)\$($ScriptName)_$($env:COMPUTERNAME).log" -Append | Out-Null
 }
 
-$RegKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP";
-$DesktopPath = "DesktopImagePath";
-$DesktopStatus = "DesktopImageStatus";
-$DesktopUrl = "DesktopImageUrl";
-$LockScreenPath = "LockScreenImagePath";
-$LockScreenStatus = "LockScreenImageStatus";
-$LockScreenUrl = "LockScreenImageUrl";
-$StatusValue = "1";
-$DesktopImageDest = "C:\Windows\Web";
-$LockScreenImageDest = "C:\Windows\Web";
+$RegKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP"
+$DesktopPath = "DesktopImagePath"
+$DesktopStatus = "DesktopImageStatus"
+$DesktopUrl = "DesktopImageUrl"
+$LockScreenPath = "LockScreenImagePath"
+$LockScreenStatus = "LockScreenImageStatus"
+$LockScreenUrl = "LockScreenImageUrl"
+$StatusValue = "1"
+$DesktopImageDest = "C:\Windows\Web"
+$LockScreenImageDest = "C:\Windows\Web"
 
 if (!$LockScreenImage -and !$DesktopImage) {
-    Write-Host "Either LockScreenImage or DesktopImage must has a value!";
+    Write-Host "Either LockScreenImage or DesktopImage must has a value!"
 } else {
     try {
-        Write-Host "Starting..." -ForegroundColor Yellow;
+        Write-Host "Starting..." -ForegroundColor Yellow
         if(!(Test-Path $RegKeyPath)) {
-            Write-Host "Creating registry path '$($RegKeyPath)'...";
-            New-Item -Path $RegKeyPath -Force | Out-Null;
+            Write-Host "Creating registry path '$($RegKeyPath)'..."
+            New-Item -Path $RegKeyPath -Force | Out-Null
         }
         if ($LockScreenImage) {
-            Write-Host "Copying Lock Screen image from '$($LockScreenImage)' to '$($LockScreenImageDest)'...";
-            Copy-Item $LockScreenImage $LockScreenImageDest -Force | Out-Null;
-            $LockScreenImageDest = $LockScreenImageDest + "\" + [System.IO.Path]::GetFileName($LockScreenImage);            
-            Write-Host "Creating registry entries for Lock Screen...";
-            New-ItemProperty -Path $RegKeyPath -Name $LockScreenStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null;
-            New-ItemProperty -Path $RegKeyPath -Name $LockScreenPath -Value $LockScreenImageDest -PropertyType STRING -Force | Out-Null;
-            New-ItemProperty -Path $RegKeyPath -Name $LockScreenUrl -Value $LockScreenImageDest -PropertyType STRING -Force | Out-Null;
+            Write-Host "Copying Lock Screen image from '$($LockScreenImage)' to '$($LockScreenImageDest)'..."
+            Copy-Item $LockScreenImage $LockScreenImageDest -Force | Out-Null
+            $LockScreenImageDest = $LockScreenImageDest + "\" + [System.IO.Path]::GetFileName($LockScreenImage)            
+            Write-Host "Creating registry entries for Lock Screen..."
+            New-ItemProperty -Path $RegKeyPath -Name $LockScreenStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null
+            New-ItemProperty -Path $RegKeyPath -Name $LockScreenPath -Value $LockScreenImageDest -PropertyType STRING -Force | Out-Null
+            New-ItemProperty -Path $RegKeyPath -Name $LockScreenUrl -Value $LockScreenImageDest -PropertyType STRING -Force | Out-Null
         }
         if ($DesktopImage) {
-            Write-Host "Copying Desktop image from '$($DesktopImage)' to '$($DesktopImageDest)'...";
-            Copy-Item $DesktopImage $DesktopImageDest -Force | Out-Null;
-            $DesktopImageDest = $DesktopImageDest + "\" + [System.IO.Path]::GetFileName($DesktopImage);            
-            Write-Host "Creating registry entries for Desktop...";
-            New-ItemProperty -Path $RegKeyPath -Name $DesktopStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null;
-            New-ItemProperty -Path $RegKeyPath -Name $DesktopPath -Value $DesktopImageDest -PropertyType STRING -Force | Out-Null;
-            New-ItemProperty -Path $RegKeyPath -Name $DesktopUrl -Value $DesktopImageDest -PropertyType STRING -Force | Out-Null;
+            Write-Host "Copying Desktop image from '$($DesktopImage)' to '$($DesktopImageDest)'..."
+            Copy-Item $DesktopImage $DesktopImageDest -Force | Out-Null
+            $DesktopImageDest = $DesktopImageDest + "\" + [System.IO.Path]::GetFileName($DesktopImage)            
+            Write-Host "Creating registry entries for Desktop..."
+            New-ItemProperty -Path $RegKeyPath -Name $DesktopStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null
+            New-ItemProperty -Path $RegKeyPath -Name $DesktopPath -Value $DesktopImageDest -PropertyType STRING -Force | Out-Null
+            New-ItemProperty -Path $RegKeyPath -Name $DesktopUrl -Value $DesktopImageDest -PropertyType STRING -Force | Out-Null
         }
-        Write-Host "Done." -ForegroundColor Green;
+        Write-Host "Done." -ForegroundColor Green
     } catch {
-        Write-Host "Script execution was interrupted due to an error!" -ForegroundColor Red;
-        Write-Host "        $($_.Exception.GetType().FullName)" -ForegroundColor Red;
-        Write-Host "        $($_.Exception.Message)" -ForegroundColor Red;
+        Write-Host "Script execution was interrupted due to an error!" -ForegroundColor Red
+        Write-Host "        $($_.Exception.GetType().FullName)" -ForegroundColor Red
+        Write-Host "        $($_.Exception.Message)" -ForegroundColor Red
     }
 }
 
 try {
-    Stop-Transcript | Out-Null;
+    Stop-Transcript | Out-Null
 } finally {}
