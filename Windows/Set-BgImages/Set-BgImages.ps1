@@ -62,6 +62,8 @@ v2.0: Set-BgImages.ps1, an improved version made by Ezequiel Lage (@ezlage)
     Date:			January, 2024
 #>
 
+#Requires -RunAsAdministrator;
+
 Param(
     [Parameter(Mandatory=$false,Position=0)] 
     [ValidateNotNullOrEmpty()]
@@ -73,10 +75,6 @@ Param(
     [ValidateNotNullOrEmpty()]
     [string]$LogPath
 )
-
-#Requires -RunAsAdministrator;
-
-$ErrorActionPreference = "Stop";
 
 Clear-Host;
 Write-Host;
@@ -91,6 +89,7 @@ Write-Host;
 Write-Host "Credits to Juan Granados (@juangranados) for the original version of the file.";
 Write-Host;
 
+$ErrorActionPreference = "Stop";
 $ScriptName = [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name);
 
 if ([string]::IsNullOrWhiteSpace($LogPath)) {
