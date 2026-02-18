@@ -1,8 +1,19 @@
 param(
     [bool] $WsusEnabled,
-    [string] $ComputerName = $null,  
+    [string] $ComputerName = $null,
     [pscredential] $Credential = $null
 )
+
+Clear-Host
+Write-Host
+Write-Host "========================================="
+Write-Host "=        [ezAdmin]: WSUS-Toolkit        ="
+Write-Host "========================================="
+Write-Host "= Developed -by Ezequiel Lage (@ezlage) ="
+Write-Host "= Sponsored -by Lagecorp (lagecorp.com) ="
+Write-Host "= Material protected by a license (MIT) ="
+Write-Host "========================================="
+Write-Host
 
 # Changing the default action on error, warning, and progress
 $EPref = $ErrorActionPreference;
@@ -33,7 +44,7 @@ Write-Host;
 Write-Host "Setting WSUS client pointing to $WsusEnabled... ";
 try {
     if (($ComputerName -eq "") -and ($null -eq $Credential)) {
-        $Result = Complete-WsusClientPointing $WsusEnabled;  
+        $Result = Complete-WsusClientPointing $WsusEnabled;
     } elseif (($ComputerName -eq "") -and -not($null -eq $Credential)) {
         $Result = Invoke-Command -Credential $Credential -ScriptBlock ${function:Complete-WsusClientPointing} -ArgumentList $WsusEnabled;
     } elseif (($null -eq $Credential) -and -not($ComputerName -eq "")) {
@@ -41,14 +52,14 @@ try {
     } else {
         $Result = Invoke-Command -ComputerName $ComputerName -Credential $Credential -ScriptBlock ${function:Complete-WsusClientPointing} -ArgumentList $WsusEnabled;
     }
-} finally {    
+} finally {
     if ($Result) {
         Write-Host "--------------------------> " -NoNewline;
         Write-Host "Success!" -ForegroundColor Green;
     } else {
         Write-Host "Are you using a session or credential with sufficient privileges?" -ForegroundColor Yellow;
         Write-Host "--------------------------> " -NoNewline;
-        Write-Host "Failure!" -ForegroundColor Red;                
+        Write-Host "Failure!" -ForegroundColor Red;
     }
 }
 Write-Host;

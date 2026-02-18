@@ -1,15 +1,24 @@
 # The original version of this script is authored by Liby Philip Mathew and was obtained through this link:
 # https://libyphilip.wordpress.com/2017/01/04/how-to-delete-driver-updates-from-wsus/
 
-# Requires RSAT for WSUS
-# Windows Server: Add-WindowsFeature -Name UpdateServices-RSAT -IncludeAllSubFeature;
-# Windows Desktop: Add-WindowsCapability -Online -Name Rsat.WSUS.Tools~~~~0.0.1.0;
-
 param(
     [string] $WsusServer = ([System.Net.Dns]::GetHostByName('localhost')).HostName,
     [int] $PortNumber = 8530,
     [bool] $UseSSL = $false
 )
+
+Clear-Host
+Write-Host
+Write-Host "========================================="
+Write-Host "=        [ezAdmin]: WSUS-Toolkit        ="
+Write-Host "========================================="
+Write-Host "= Developed -by Ezequiel Lage (@ezlage) ="
+Write-Host "= Sponsored -by Lagecorp (lagecorp.com) ="
+Write-Host "= Material protected by a license (MIT) ="
+Write-Host "========================================="
+Write-Host
+Write-Host "Credits to Liby Philip Mathew (libyphilip.wordpress.com) for the original version."
+Write-Host
 
 # Changing the default action on error, warning, and progress
 $EPref = $ErrorActionPreference;
@@ -20,12 +29,12 @@ $WarningPreference = 'SilentlyContinue';
 $ProgressPreference = 'SilentlyContinue';
 
 Write-Host "Disabling and removing WSUS drivers..."
-try {    
+try {
     [Reflection.Assembly]::LoadWithPartialName("Microsoft.UpdateServices.Administration") | Out-Null;
     $wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer($WsusServer, $UseSSL, $PortNumber);
     Get-WsusClassification -UpdateServer $wsus | Where-Object -FilterScript {$_.Classification.Title -eq "Drivers"} | Set-WsusClassification -Disable;
     Get-WsusClassification -UpdateServer $wsus | Where-Object -FilterScript {$_.Classification.Title -eq "Driver Sets"} | Set-WsusClassification -Disable;
-    $Updates = $wsus.GetUpdates();    
+    $Updates = $wsus.GetUpdates();
     $Drivers = $Updates | Where-Object {($_.UpdateClassificationTitle -eq 'Drivers') -or ($_.UpdateClassificationTitle -eq 'Driver Sets')}
     Write-Host "-> [$($Updates.Count) updates and $($Drivers.Count) drivers found]"
     $Count = 0;
@@ -33,7 +42,7 @@ try {
     $Drivers | ForEach-Object {
         $Count += 1;
         $Update = $_.Title;
-        try {            
+        try {
             $wsus.DeleteUpdate($_.Id.UpdateID);
             Write-Host "$Count/$($Drivers.Count): '$Update' removed successfully!" -ForegroundColor Green;
         } catch {

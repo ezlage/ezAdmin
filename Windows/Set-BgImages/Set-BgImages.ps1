@@ -54,10 +54,10 @@ v2.0: Set-BgImages.ps1, an improved version made by Ezequiel Lage (@ezlage)
 	Set Desktop Wallpaper only:
     .\Set-BgImages -DesktopImage "\\srvfs01\folder\Desktop.png" -LogPath "\\srvfs01\folder\Logs"
 
-.NOTES 
+.NOTES
 	Author:			Juan Granados (@juangranados)
 	Date:			September, 2018
-    
+
     Contributor:	Ezequiel Lage (@ezlage)
     Date:			January, 2024
 #>
@@ -65,13 +65,13 @@ v2.0: Set-BgImages.ps1, an improved version made by Ezequiel Lage (@ezlage)
 #Requires -RunAsAdministrator
 
 Param(
-    [Parameter(Mandatory=$false,Position=0)] 
+    [Parameter(Mandatory=$false,Position=0)]
     [ValidateNotNullOrEmpty()]
     [string]$LockScreenImage,
-    [Parameter(Mandatory=$false,Position=1)] 
+    [Parameter(Mandatory=$false,Position=1)]
     [ValidateNotNullOrEmpty()]
     [string]$DesktopImage,
-    [Parameter(Mandatory=$false,Position=2)] 		
+    [Parameter(Mandatory=$false,Position=2)]
     [ValidateNotNullOrEmpty()]
     [string]$LogPath
 )
@@ -86,7 +86,7 @@ Write-Host "= Sponsored -by Lagecorp (lagecorp.com) ="
 Write-Host "= Material protected by a license (MIT) ="
 Write-Host "========================================="
 Write-Host
-Write-Host "Credits to Juan Granados (@juangranados) for the original version of the file."
+Write-Host "Credits to Juan Granados (@juangranados) for the original version."
 Write-Host
 
 $ErrorActionPreference = "Stop"
@@ -125,7 +125,7 @@ if (!$LockScreenImage -and !$DesktopImage) {
         if ($LockScreenImage) {
             Write-Host "Copying Lock Screen image from '$($LockScreenImage)' to '$($LockScreenImageDest)'..."
             Copy-Item $LockScreenImage $LockScreenImageDest -Force | Out-Null
-            $LockScreenImageDest = $LockScreenImageDest + "\" + [System.IO.Path]::GetFileName($LockScreenImage)            
+            $LockScreenImageDest = $LockScreenImageDest + "\" + [System.IO.Path]::GetFileName($LockScreenImage)
             Write-Host "Creating registry entries for Lock Screen..."
             New-ItemProperty -Path $RegKeyPath -Name $LockScreenStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null
             New-ItemProperty -Path $RegKeyPath -Name $LockScreenPath -Value $LockScreenImageDest -PropertyType STRING -Force | Out-Null
@@ -134,7 +134,7 @@ if (!$LockScreenImage -and !$DesktopImage) {
         if ($DesktopImage) {
             Write-Host "Copying Desktop image from '$($DesktopImage)' to '$($DesktopImageDest)'..."
             Copy-Item $DesktopImage $DesktopImageDest -Force | Out-Null
-            $DesktopImageDest = $DesktopImageDest + "\" + [System.IO.Path]::GetFileName($DesktopImage)            
+            $DesktopImageDest = $DesktopImageDest + "\" + [System.IO.Path]::GetFileName($DesktopImage)
             Write-Host "Creating registry entries for Desktop..."
             New-ItemProperty -Path $RegKeyPath -Name $DesktopStatus -Value $StatusValue -PropertyType DWORD -Force | Out-Null
             New-ItemProperty -Path $RegKeyPath -Name $DesktopPath -Value $DesktopImageDest -PropertyType STRING -Force | Out-Null

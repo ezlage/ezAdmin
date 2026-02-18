@@ -41,10 +41,10 @@
 
 .NOTES
     Original repository: https://github.com/awarre/Optimize-WsusServer
-    Repository of this derivation: https://github.com/ezlage/WSUS-Toolkit    
+    Repository of this derivation: https://github.com/ezlage/WSUS-Toolkit
     Changes made are detailed in comments!
     All color changes have been disabled!
-     
+
 .EXAMPLE
     Optimize-WsusServer.ps1 -FirstRun
     Optimize-WsusServer.ps1 -DeepClean
@@ -83,6 +83,19 @@ param (
     $DeclineSupersededUpdates
 )
 
+Clear-Host
+Write-Host
+Write-Host "========================================="
+Write-Host "=        [ezAdmin]: WSUS-Toolkit        ="
+Write-Host "========================================="
+Write-Host "= Developed -by Ezequiel Lage (@ezlage) ="
+Write-Host "= Sponsored -by Lagecorp (lagecorp.com) ="
+Write-Host "= Material protected by a license (MIT) ="
+Write-Host "========================================="
+Write-Host
+Write-Host "Credits to Awarre (@awarre) and Dummvogl (@dummvogl) for the original version."
+Write-Host
+
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
 # Recommended IIS settings: https://www.reddit.com/r/sysadmin/comments/996xul/getting_2016_updates_to_work_on_wsus/
@@ -114,7 +127,7 @@ $unneededUpdatesbyProductTitles = @(
 
     # Many environments have software and/or hardware without the IT Department knowing. For this reason, it is preferable to receive more updates rather than less,
     # except when dealing with drivers. Either way, you can still add whatever titles you want to the this array. (by @ezlage)
-    
+
     #"Forefront Identity Manager 2010",
     #"Microsoft Lync Server 2010",
     #"Microsoft Lync Server 2013",
@@ -421,7 +434,7 @@ function Optimize-WsusUpdates {
     $Output.Replace(":",": ")
 
     Write-Host "Declining additional superseded updates"
-    Set-SupersededToDeclined $True 
+    Set-SupersededToDeclined $True
 }
 
 function Optimize-WsusDatabase {
@@ -714,7 +727,7 @@ function Update-WsusIISConfig ($settingKey, $recommendedValue) {
         }
         default {}
     }
-    
+
     Write-Host "Updated IIS Setting: $settingKey, $recommendedValue" #-BackgroundColor Green -ForegroundColor Black
 }
 
