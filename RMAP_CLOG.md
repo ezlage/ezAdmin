@@ -41,6 +41,8 @@ Nothing for now.
 > Actions taken that are awaiting release
 
 - Update Roadmap and Changelog
+- Replace Zabbix Agent MSI x86_32 package
+- Update Roadmap and Changelog
 - Add ZAD (Zabbix Agent Deployer)
 - Update credits header
 - Add a new line at the end
