@@ -9,7 +9,7 @@ It is designed to map multiple network drives to different users or groups acros
 #### Usage
 
 ```powershell
-.\Mount-BulkMappings -MappingsCSV <".\BulkMappings.csv"> [-SkipCredPrompt]   
+.\Mount-BulkMappings -MappingsCSV <".\BulkMappings.csv"> [-SkipCredPrompt]
 
 # MappingsCSV: the CSV file containing the list of mappings to be carried out.
 
@@ -18,7 +18,7 @@ It is designed to map multiple network drives to different users or groups acros
 
 About the CSV file:
 
-- It must must be separated by commas and have the following columns:    
+- It must must be separated by commas and have the following columns:
 
     Entity, DriveLetter, FullPath, Persistent, CredPrompt, SaveCred
 
