@@ -40,6 +40,13 @@ Nothing for now.
 
 > Actions taken that are awaiting release
 
+Nothing for now.
+
+### v0.1.0
+
+> Actions taken and released on 2026-03-03 at 15:05 UTC-03
+
+- Update Roadmap and Changelog
 - Update Roadmap and Changelog
 - Add Debian 13 x64 tutorial
 - Update Roadmap and Changelog
