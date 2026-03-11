@@ -42,6 +42,13 @@ Nothing for now.
 
 Nothing for now.
 
+### v0.1.1
+
+> Actions taken and released on 2026-03-11 at 13:40 UTC-03
+
+- Update Roadmap and Changelog
+- Improve Sync-TwoWayWithAuth
+
 ### v0.1.0
 
 > Actions taken and released on 2026-03-03 at 15:05 UTC-03
