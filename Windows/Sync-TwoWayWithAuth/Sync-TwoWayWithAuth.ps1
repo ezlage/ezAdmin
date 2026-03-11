@@ -93,8 +93,8 @@ begin {
             Remove-SmbMapping -RemotePath $Map.Source -Force -ErrorAction SilentlyContinue | Out-Null
             New-SmbMapping -LocalPath $MountPoint -RemotePath $Map.Source -Persistent $false -UserName ([System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($User))) -Password ([System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Pass))) -ErrorAction Stop | Out-Null
             New-Item -Path $Map.Destination -ItemType Directory -Force | Out-Null
-            Robocopy.exe "$MountPoint" "$($Map.Destination)" /E /XO /COPY:DAT /DCOPY:DAT /R:1 /W:5 /V /NP /XF "autorun.inf" /XF "desktop.ini" /XF "Thumbs.db" /XD "DfsrPrivate"
-            Robocopy.exe "$($Map.Destination)" "$MountPoint" /E /XO /COPY:DAT /DCOPY:DAT /R:1 /W:5 /V /NP /XF "autorun.inf" /XF "desktop.ini" /XF "Thumbs.db" /XD "DfsrPrivate"
+            Robocopy.exe "$MountPoint" "$($Map.Destination)" /E /XO /COPY:DATSOU /DCOPY:DAT /R:1 /W:5 /V /NP /XF "autorun.inf" /XF "desktop.ini" /XF "Thumbs.db" /XD "DfsrPrivate"
+            Robocopy.exe "$($Map.Destination)" "$MountPoint" /E /XO /COPY:DATSOU /DCOPY:DAT /R:1 /W:5 /V /NP /XF "autorun.inf" /XF "desktop.ini" /XF "Thumbs.db" /XD "DfsrPrivate"
             Write-Host
             Write-Host "[$($Map.Name)] synchronization success!" -ForegroundColor Green
             Write-Host
