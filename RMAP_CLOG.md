@@ -42,6 +42,15 @@ Nothing for now.
 
 Nothing for now.
 
+### v0.1.2
+
+> Actions taken and released on 2026-04-17 at 02:20 UTC-03
+
+- Update Roadmap and Changelog
+- Update Debian 13 x64 tutorial
+- Improve Mount-BulkMappings documentation
+- Update the aesthetics of the license file
+
 ### v0.1.1
 
 > Actions taken and released on 2026-03-11 at 13:40 UTC-03
