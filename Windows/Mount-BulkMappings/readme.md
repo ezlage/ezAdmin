@@ -20,31 +20,27 @@ About the CSV file:
 
 - It must must be separated by commas and have the following columns:
 
-    Entity, DriveLetter, FullPath, Persistent, CredPrompt, SaveCred
+	**Entity, DriveLetter, FullPath, Persistent, CredPrompt, SaveCred**
 
-    Entity
-        The target group or user account name
-    DriveLetter
-        The drive letter (A-Z or some special port like LPT/COM)
-    FullPath
-        The full network path of the resource to be mapped
-        (in some scenarios it could be a shared printer)
-    Persistent
-        Will the mapping persist after logoff?
-    CredPrompt
-        Will it be necessary to request credentials?
-        (it will be only once and apply to all mappings for the same user)
-    SaveCred
-        Should the credentials be saved in the user profile vault?
-        (it uses the cmdkey utility)
+	`Entity`: The target group or user account name.
 
-- Values interpreted as positive:
+	`DriveLetter`: The drive letter (A-Z or some special port like LPT/COM).
+
+	`FullPath`: The full network path of the resource to be mapped (in some scenarios it could be a shared printer).
+
+	`Persistent`: Will the mapping persist after logoff?
+
+	`CredPrompt`: Will it be necessary to request credentials? if yes, it will be only once and apply to all mappings for the same user.
+
+	`SaveCred`: Should the credentials be saved in the user profile vault? (it uses the cmdkey utility)
+
+- Values interpreted as positive:  
         true, yes, y, 1
 
-- Values interpreted as negative:
+- Values interpreted as negative:  
         false, no, n, 0
 
-- Some example lines:
+- Some example lines:  
 
         "SomeUser","X","\\server\folderA",1,1,1
         "SomeGroup","Y","\\server\folderB",0,0,0
